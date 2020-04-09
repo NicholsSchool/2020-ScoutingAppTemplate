@@ -5,6 +5,7 @@ The following files are the only that are required to be adjusted for the client
 * index.html
 * rankings.html
 * main.js (For some cases)
+* teamInfo.html (optional)
 
 Each page has commented instructions explaining how to adjust them. The same comments will be here, so that you can delete them from the files to avoid clutter.
 
@@ -130,4 +131,18 @@ For example, if you added sliders for the user to use, make sure they all have a
             $(this).val(0); // Or however the input is reset
     })
 
+## TeamInfo.Html (Optional)
+
+This page currently display's a team progression in an event for their Auto Score, Teleop Score, Endgame Score, and Total Score. If you would like to see a progression over time for more tasks, just copy the following html and paste it after the last graph (where the comment is located in the file), and replace the ID and header with the corresponding path to the task.
+
+            <div class="col-md-5 mt-3">
+                <div class="card text-center ">
+                    <div class="card-header">
+                        Gameperiod Task
+                    </div>
+                    <div class="card-body">
+                        <canvas id="gameperiod-task" width="100%" height="100%"></canvas>
+                    </div>
+                </div>
+            </div>
                 

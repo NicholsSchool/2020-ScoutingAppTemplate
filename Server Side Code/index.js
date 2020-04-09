@@ -10,6 +10,13 @@ const app = express()
 //Firebase realtime database
 const db = admin.firestore();
 
+/*
+    TODO: Insert your own Blue Alliance auth key as an environmental variable
+    In terminal type: 
+        firebase functions:config:set bluealliance.authky="REPLACE_WITH_THE_TBA_API_KEY"
+    
+    For more info on firebase environmental variables, go here: https://firebase.google.com/docs/functions/config-env
+ */
 const blueAllianceAuth = functions.config().bluealliance.authkey;
 
 /**
@@ -241,7 +248,7 @@ app.get('/getEmptyData', (req, res) => {
 function getEmptyMatchData()
 {
     /*
-     TODO: Insert here each task for each gameperiod of the game. 
+     TODO: Insert each task for each gameperiod of the game here. 
 
             You can insert as many tasks as necessary. 
             Try to keep tasks one word, if more than one word has to be 
@@ -251,22 +258,27 @@ function getEmptyMatchData()
 
             Set each task's value to 0. 
             
+            DO NOT remove any of the "score" attributes or the "totalScore."
+
             Example:
                 gamePlay: {
                         auto: {
                             "line" : 0, 
+                            "score": 0,
                             ...
                         },
                         teleop: {
                             "jumps": 0,
+                            "score": 0,
                             ...
                         },
                         ...
                     }
             
             Notes: 
-                    If another gameperiod is necessary to be added, that is fine to add
-                    but remember to add it to getDataPointValues() as well. 
+                    If another gameperiod is necessary to be added, that is fine
+                    but remember to add it to getDataPointValues() as well. Adding a 
+                    "score" attribute to the new gameperiod is not needed.
 
                     If after an event you decide to add more tasks or remove some,
                     that should work compeletly fine for your next event, but may cause
@@ -282,15 +294,15 @@ function getEmptyMatchData()
         gamePlay: {
             auto: {
                 // Insert tasks for Auto here.
-                
+                "score": 0,
             },
             teleop: {
                 // Insert tasks for Teleop here.
-
+                "score": 0,
             },
             end: {
                 // Insert tasks for Endgame here.
-                
+                "score": 0,
             },
             performance: {
                 // Insert tasks for Performace here.
@@ -314,15 +326,16 @@ function getDataPointValues()
       TODO: Insert the point value for each task for each gameperiod of the game here.
 
       All gameperiods and tasks MUST be identical to those written for the content of 
-      "gameplay" inside the  getEmptyMatchData() method. 
+      "gameplay" inside the  getEmptyMatchData() method, but DO NOT INCLUDE
+      the "score" attributes or "totalScore"
 
       Insert the corresponding point value for each task as described in the game manual. 
       You may want to record tasks that don't actually give a team points, just set the value 
       for these to 0. For example, the content inside the "performance" map is likely all zeros,
-      stuff like "defense" or "no_show".
+      data such as "defense" or "no_show".
 
       Example (Made up point values): 
-         {
+        return {
             auto: {
                 "line" : 5,
                 ...

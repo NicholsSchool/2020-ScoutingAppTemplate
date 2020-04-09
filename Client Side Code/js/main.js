@@ -115,7 +115,6 @@ async function getInputtedData(){
             for (i = 0; i < path.length - 1; i++)
                 temp = temp[path[i]];
 
-
             /* 
                 TODO:
                 If you have added an input to index.html that is not a check box 

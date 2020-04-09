@@ -73,7 +73,7 @@ The event key is `2020ohmv`
 
 This will set up the event's schedule as well as each team in the app's storage, and set the app to scout for that event. 
 
-If you would like to switch back to an event that was already set up, either to see the scouted data again or test somethings, you will have to go into the Firebase Online Console for the project and go to the Database tab and then in the "MetaData" collection, set the current event to the desired event, event's key. But make sure the event already exists in the database. 
+If you would like to switch back to an event that was already set up, either to see the scouted data again or test somethings, you will have to go into the Firebase Online Console for the project and go to the Database tab and then in the "MetaData" collection, set the current event to the desired event's event key. But make sure the event already exists in the database. 
 
 ## Issues With The App
 

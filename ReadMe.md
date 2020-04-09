@@ -52,6 +52,16 @@ The server side code in this repo uses the "Express" library, to make your new p
 
 Now follow the instructions inside each folder of this repo and within the files themselves to adjust the app to your desired year's game 
 
+For testing the app, use 
+	
+	firebase serve
+
+in the terminal to locally host the app on your laptop. Once the app is all good or if the local hosting isn't working properly, use 
+
+	firebase deploy
+
+to launch the app. If you continue to work after deploying but only make a change to the front end, use `firebase deploy --only hosting` for a quicker deploy, or `firebase deploy --only functions` for vice versa. 
+
 ## Usage 
 
 The scouting part of the app will vary year to year based off the game. Remember to remind scouts that they can not change the data once they submit.

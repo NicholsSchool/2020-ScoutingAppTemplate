@@ -15,7 +15,7 @@ const db = admin.firestore();
     Create an account if you don't already have one. Then on the page, scroll to the bottom
      to "Read API Keys" input the App's name as the description, and then select "Add New Key".
      With the new key, type the following into the terminal of your project:
-        firebase functions:config:set bluealliance.authky="REPLACE_WITH_THE_TBA_API_KEY"
+        firebase functions:config:set bluealliance.authkey="REPLACE_WITH_THE_TBA_API_KEY"
     
     For more info on firebase environmental variables, go here: https://firebase.google.com/docs/functions/config-env
  */

@@ -50,6 +50,11 @@ The server side code in this repo uses the "Express" library, to make your new p
  
 <hr/>
 
+Also, since we started in Testing mode for our database, the default rules make it so that after one month, the database will no longer be accessible. If a future student would like to add the functionality of having accounts for each scout, then you can edit the rules so that people with accounts can access the data. 
+As of right now, the app has no such functionality for accounts, so you can instead adjust the rules by going into "firestore.rules" and adding a year to the timestamp date, making the database accessible until that new date. Obviously, this is not the most secure way to go about the storage rules, as technically anyone can read and write to the database, but it is unlikely someone will try to tamper with our data and as long as we keep the url within the team, the app should be fine. 
+
+<hr/>
+
 Now follow the instructions inside each folder of this repo and within the files themselves to adjust the app to your desired year's game 
 
 For testing the app, use 

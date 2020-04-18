@@ -11,7 +11,16 @@ Each page has commented instructions explaining how to adjust them. The same com
 
 You can also look at the code for the 2020FRCScouting app as an example. 
 
+### Title 
+
+Change the title tag of each page. Go through each .html page (excluding 404.html and header.html) and fill in the year and type of competition, FRC or FTC, for the title tag at the top of the file:
+
+	<title>YEAR TYPE Match Scouting</title>
+
+
 ## Rankings.html
+
+The rankings page uses Firebase on the client side of the code, as opposed to all the other pages which rely on the server side code. It does this so that it can provide real time updates to the ranking tables the user views. To link it to your firebase project, you need to edit the config.
 
 (Located on Bottom of file)
 
@@ -28,7 +37,9 @@ On the firebase console, navigate to the project setting and find the apikey, th
 ## Index.html
 **Set up the server side code for index.js BEFORE adjusting this page**
 
-   Some notes for creating the inputs for this page. 
+This page is where the scouting form exists. 
+
+Some notes for creating the inputs for this page. 
 
  1. Follow the Instructions for setting up the back-end index.js first!
 

@@ -1,6 +1,6 @@
 # Server Side Code Adjustments
 
-The following functions within index.js are required to be adjusted for the server side of the app
+The following functions within **data.js** are required to be adjusted for the server side of the app, no other files or functions have to be edited.
 
 * `getEmptyMatchData()`
 * `getDataPointValues()`
@@ -8,9 +8,10 @@ The following functions within index.js are required to be adjusted for the serv
 
 Also an Environmental Variable for The Blue Alliance Authkey has to be set up. 
 
-Each function has commented instructions explaining how to adjust them. The same comments will be here, so that you can delete them from the file to avoid clutter.
+Each function listed above has commented instructions explaining how to adjust them. The same comments will be here, so that you can delete them from the file to avoid clutter.
 
 You can also look at the code for the 2020FRCScouting app as an example. 
+
 
 ## Blue Alliance Auth Key
 

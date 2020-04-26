@@ -1,24 +1,12 @@
 # Server Side Code Adjustments
 
-The following functions within index.js are required to be adjusted for the server side of the app
+The following functions within **data.js** are required to be adjusted for the server side of the app, no other files or functions have to be edited.
 
 * `getEmptyMatchData()`
 * `getDataPointValues()`
 * `getDependentData()`
 
-Also an Environmental Variable for The Blue Alliance Authkey has to be set up. 
-
-Each function has commented instructions explaining how to adjust them. The same comments will be here, so that you can delete them from the file to avoid clutter.
-
-You can also look at the code for the 2020FRCScouting app as an example. 
-
-## Blue Alliance Auth Key
-
-Go to the Blue Alliance Account page, https://www.thebluealliance.com/account. Create an account if you don't already have one. Then on the page, scroll to the bottom to "Read API Keys" input the App's name as the description, and then select "Add New Key". With the new key type the following into the terminal of your project: 
-
-	firebase functions:config:set bluealliance.authkey="REPLACE_WITH_THE_TBA_API_KEY"
-	
-For more info on firebase environmental variables, go here: https://firebase.google.com/docs/functions/config-env
+You can also look at the code for the 2020FTCScouting app as an example. 
 
 ## GetEmptyMatchData()
 

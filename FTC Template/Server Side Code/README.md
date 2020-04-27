@@ -8,6 +8,8 @@ The following functions within **data.js** are required to be adjusted for the s
 
 You can also look at the code for the 2020FTCScouting app as an example. 
 
+**Note: You do NOT have to setup an environmental variable for the Blue Alliance or any site for this FTC version of the app.**
+
 ## GetEmptyMatchData()
 
 Insert each task for each gameperiod of the game here. 
@@ -29,6 +31,11 @@ Example:
 	            "jumps": 0,
 	            ...
 	        },
+			performace: {
+				"defense": 0,
+				"no_show": 0,
+				...
+			},
 	        ...
 	    }
                     
@@ -62,6 +69,7 @@ Example (Made up point values):
 	    },
 	    performance: {
 	        "defense": 0,
+			"no_show": 0,
 	        ...
 	    },
 	    ...

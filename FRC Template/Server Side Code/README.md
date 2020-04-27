@@ -42,6 +42,11 @@ Example:
 	            "jumps": 0,
 	            ...
 	        },
+			performace: {
+				"defense": 0,
+				"no_show": 0,
+				...
+			},
 	        ...
 	    }
                     
@@ -75,6 +80,7 @@ Example (Made up point values):
 	    },
 	    performance: {
 	        "defense": 0,
+			"no_show": 0,
 	        ...
 	    },
 	    ...

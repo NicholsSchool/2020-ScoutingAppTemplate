@@ -32,9 +32,11 @@ Firebase Firestore, Functions, Hosting, and Emulators are needed for the project
 
 Once all done, download the contents of this repo.
 
-From the content downloaded from this repo, insert all the files within "Client Side Code" into the "Public" folder of your new Project. The "index.html" file and "404.html" file should get overridden. 
+
+From the content downloaded from this repo, select the corresponding folder for your app, either FRC or FTC. Then insert all the files within "Client Side Code" into the "Public" folder of your new Project. The "index.html" file and "404.html" file should get overriden. 
  
- From the content downloaded from this repo, insert all the files within "Server Side Code", into the "Functions" folder of your new project, "index.js" should get overridden. 
+Next, insert all the files within "Server Side Code", into the "Functions" folder of your new project, "index.js" should get overriden. 
+
  
 The server side code in this repo uses the "Express" library, to make your new project use this as well, add the following code in the "firebase.json" file, inside the "hosting" object:
 

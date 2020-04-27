@@ -32,9 +32,9 @@ Firebase Firestore, Functions, Hosting, and Emulators are needed for the project
 
 Once all done, download the contents of this repo.
 
-From the content downloaded from this repo, insert all the files within "Client Side Code" into the "Public" folder of your new Project. The "index.html" file and "404.html" file should get overriden. 
+From the content downloaded from this repo, insert all the files within "Client Side Code" into the "Public" folder of your new Project. The "index.html" file and "404.html" file should get overridden. 
  
- From the content downloaded from this repo, insert all the files within "Server Side Code", into the "Functions" folder of your new project, "index.js" should get overriden. 
+ From the content downloaded from this repo, insert all the files within "Server Side Code", into the "Functions" folder of your new project, "index.js" should get overridden. 
  
 The server side code in this repo uses the "Express" library, to make your new project use this as well, add the following code in the "firebase.json" file, inside the "hosting" object:
 
@@ -106,7 +106,7 @@ Generally a list of teams competing at the competition is sent out beforehand. T
 
 ## Issues With The App
 
-1. Quota for Reads per day: The free plan for Firebase offers 50,000 reads per day. For a few people testing the app, this is more than enough, but when the whole team uses the app for scouting and viewing the data, this can build up fast. At Miami Valley 2020, after our scouting meeting at night, we had exceeded our quota and the app would not work becuase we weren't able to use any more reads. 
+1. Quota for Reads per day: The free plan for Firebase offers 50,000 reads per day. For a few people testing the app, this is more than enough, but when the whole team uses the app for scouting and viewing the data, this can build up fast. At Miami Valley 2020, after our scouting meeting at night, we had exceeded our quota and the app would not work because we weren't able to use any more reads. 
 
 	There are three things the team can do to avoid issues with the quota
 	

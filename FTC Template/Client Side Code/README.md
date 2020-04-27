@@ -35,17 +35,17 @@ On the firebase console, navigate to the project setting and find the apikey, th
 	var db = firebase.firestore();
 	
 ## Index.html
-**Set up the server side code for index.js BEFORE adjusting this page**
+**Set up the server side code for data.js BEFORE adjusting this page**
 
 This page is where the scouting form exists. 
 
 Some notes for creating the inputs for this page. 
 
- 1. Follow the Instructions for setting up the back-end index.js first!
+ 1. Follow the Instructions for setting up the back-end data.js first!
 
 2. To make this page look nice, it is recommended that you have some knowledge in using bootstrap, especially its row and column features and its ability to make a card. Info on how to use Bootstrap can be found through their documenatation: https://getbootstrap.com/docs/4.0/getting-started/introduction/ by going to the "Components" tab. Try making a seperate html document and playing with bootstrap until you feel comfortable
 
-3. For each location you want to retrieve an input from, the tag must have the class "**data**" as one of its classes and it must have an ID which matches the storage path on the empty match data  object created in the back-end index.js, with "-" seperating each key. It should look like this: "**gameperiod-task**". So for example, if your match data object looks like this:
+3. For each location you want to retrieve an input from, the tag must have the class "**data**" as one of its classes and it must have an ID which matches the storage path on the empty match data  object created in the back-end data.js, with "-" seperating each key. It should look like this: "**gameperiod-task**". So for example, if your match data object looks like this:
 
 
 		gameplay:{

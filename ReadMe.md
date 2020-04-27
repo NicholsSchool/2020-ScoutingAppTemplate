@@ -112,17 +112,15 @@ Generally a list of teams competing at the competition is sent out beforehand. T
 
 	There are three things the team can do to avoid issues with the quota
 	
-	* Have the scouts only use the scouting side of the app on the day before our hotel night scout meeting. If lots of people are viewing the analytical parts before the meeting, the quota could run out or almost be out during the meeting. Instead, have the scouts scout and have one person viewing the data, (possibly put it on a monitor for others to see). On any other day, anyone can view the data, because it won't matter if the quota runs out becuase there is no official meeting about the data. 
+	* Have the scouts only use the scouting side of the app on the day before our hotel night scout meeting. If lots of people are viewing the analytical parts before the meeting, the quota could run out or almost be out during the meeting. Instead, have the scouts scout and have one person viewing the data, (possibly put it on a monitor for others to see). On any other day, anyone can view the data, because it won't matter if the quota runs out because there is no official meeting about the data. 
 
-	* Once the day ends, before the hotel scouting meeting, have someone go on the "Tables" page and select every task, and then copy and paste the data into a spreadsheet. The way the "Tables" page is built, this should be very easy to do, and this will allow the team to have a back up of the data if the quota gets exceeded.
+	* Once the day ends, before the hotel scouting meeting, have someone go on the "Tables" page and select every task, and then copy and paste the data into a spreadsheet. The way the "Tables" page is built, this should be very easy to do, and this will allow the team to have a backup of the data if the quota is exceeded.
 
-	* Switch to [Firebase's Blaze Plan](https://firebase.google.com/pricing). This plan is pay as you go, so you only pay money if you exceed the quota **but** the quota is per month instead of per day. So if you exceed 1,500,000 reads in a month, you pay 6 cents per 100 thousand more reads. Our team will likely never ever exceed this quota becuase we would only use the app for 2 or 3 days of a month. 
+	* Switch to [Firebase's Blaze Plan](https://firebase.google.com/pricing). This plan is pay as you go, so you only pay money if you exceed the quota **but** the quota is per month instead of per day. So if you exceed 1,500,000 reads in a month, you pay 6 cents per 100 thousand more reads. Our team will likely never ever exceed this quota because we would only use the app for 2 or 3 days of a month. 
 	
-	
+2. Wifi. If we attend an event with no wifi or cellular service, the team will not be able to access and use the app. So always make and bring paper scouting forms to events and a group of students can insert the paper data into the app in a location with wifi or afterwards in the hotel. 
 
-3. Wifi. If we attend an event with no wifi or cellular service, the team will not be able to access and use the app. So always make and bring paper scouting forms to events
-
-2. Security. The app doesn't have any authentication of users, so really anyone could use the app and put in nonsense data for scouting or log on to the admin page and switch the event. It is very unlikely that someone would do something like this, but as a safeguard, keep the url amongst team members only. Firebase does offer code to authenticate users, and this could be a feature added to the app in the future and it would also allow us to share the app with multiple teams. 
+3. Security. The app doesn't have any authentication of users, so really anyone could use the app and put in nonsense data for scouting or log on to the admin page and switch the event. It is very unlikely that someone would do something like this, but as a safeguard, keep the url amongst team members only. Firebase does offer code to authenticate users, and this could be a feature added to the app in the future and it would also allow us to share the app with multiple teams. 
 
 
 ## Useful Resources

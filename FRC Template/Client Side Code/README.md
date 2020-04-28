@@ -70,15 +70,17 @@ using for keeping track of the jumps in teleop has to be "**teleop-jumps**".
 
     For a checkbox - Note how the input tag has a class of "**data**" and its ID is the general case as an example. Also, that the label has a "`for`" attribute which MUST match the ID of the input:
 
-        <div class="card-body">
-                <div class="form-check">
-                    
-                    <input class="form-check-input data" type="checkbox" id = "gameperiod-task">
+        <div class = "card">
+            <div class="card-body">
+                    <div class="form-check">
+                        
+                        <input class="form-check-input data" type="checkbox" id = "gameperiod-task">
 
-                    <label class="form-check-label" for="gameperiod-task">
-                        Task 
-                    </label>
+                        <label class="form-check-label" for="gameperiod-task">
+                            Task 
+                        </label>
 
+                    </div>
                 </div>
             </div>
         </div>

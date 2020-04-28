@@ -1,30 +1,18 @@
-console.log("Main called");
-
 document.addEventListener("DOMContentLoaded", event => {
-    $("#main").hide();
-    $("#capstone-info").hide();
-    setUpEvent();
+    $("#main").hide(); // Comment this line out when creating index.html. 
+    // REMEMBER TO UNCOMMENT WHEN DONE
 
-    // Sets up the increment/decrement features of the +/- options
-    $(".change-btn").on("click", function(){
-       console.log("clicked")
-       var id = $(this).attr("for");
-       var val = parseInt($("#" + id).text());
-       if($(this).hasClass("increment"))
+    // Used for changing values of incrementation/decrementation inputs
+    $(".change-btn").on("click", function () {
+        var id = $(this).attr("for");
+        var val = parseInt($("#" + id).text());
+        if ($(this).hasClass("increment"))
             $("#" + id).text(val + 1);
-        else if(val > 0)
-           $("#" + id).text(val - 1);
-   })
-    $("#end-capstone_placed").on("click", function(){
-       if(this.checked)
-            $("#capstone-info").show();
-        else
-        {
-           $("#capstone-info").hide();
-           $("#end-capstone_height").text(0);
-        }
-   })
-   $("#submit-btn").on("click", saveData);
+        else if (val > 0)
+            $("#" + id).text(val - 1);
+    })
+    setUpEvent();
+    $("#submit-btn").on("click", saveData);
 })
 
 /**
@@ -107,45 +95,73 @@ function getTeamOption(team, color) {
 }
 
 /**
- * Returns the data inputted by the user for the match
+ * Complies and returns all the data that was recorded during scoutting
+ * 
+ * @return all the data that was recorded during scoutting
  */
-function getInputtedData() {
+async function getInputtedData() {
     return getEmptyMatchData()
-    .then(data => {
-        data.match = $("#match-choices option:selected").text();
-        data.team = $("#team-choices option:selected").text();
-        $(".data").each(function (index, obj){
-            var path = $(this).attr("id").split("-");
-            var temp = data.gamePlay;
-            for(i = 0; i < path.length - 1; i ++)
-                temp = temp[path[i]];
+        .then(data => {
+            data.match = $("#match-choices option:selected").text();
+            data.team = $("#team-choices option:selected").text();
+            $(".data").each(function (index, obj) {
+                var path = $(this).attr("id").split("-");
+                console.log(path);
+                //This temp object is used to traverse down the data in the path given
+                var temp = data.gamePlay;
+                for (i = 0; i < path.length - 1; i++)
+                    temp = temp[path[i]];
 
-            if ($(this).hasClass("form-check-input"))
-                temp[path[i]] = $(this).is(':checked') ? 1 : 0;
-            else if ($(this).parent().hasClass("btn"))
-                temp[path[i]] = $(this).parent().hasClass("active") ? 1 : 0;
-            else
-                temp[path[i]] = parseInt($(this).text().trim());
-        })
-        return data;
-    })
+                /* 
+                    TODO:
+                    If you have added an input to index.html that is not a check box 
+                        or just a numerical value, like those in the incrementation/decrementation boxes,
+                        then add an else if statement that checks to see if the current object
+                        is one of the ones you've added, and then add a line setting "temp[path[i]]" equal
+                        to the input
+                        
+                    For example, if you added sliders for the user to use, make sure they all have a common class
+                    such as "form-slider", and then you can add an else if stament as such: 
+    
+                    else if( $(this).hasClass("form-slider") )
+                        temp[path[i]] = $(this).val(); // Or however the value is retrieved
+                */
+                // Records data here 
+                if ($(this).hasClass("form-check-input"))  // Records check box data
+                    temp[path[i]] = $(this).is(':checked') ? 1 : 0;
+
+                // If needed, add else if statement here
+
+                else
+                    temp[path[i]] = parseInt($(this).text().trim()); // Records numerical data
+            });
+            return data;
+        });
+
 }
 
-
-/**
- * Resets the whole form
- */
-function reset()
-{
-    $(".btn-group").each(function() {
-        $(this).children(".btn").eq(0).trigger("click");
-    })
-
+//Resets the form to a blank state
+function reset() {
     $(".form-control").each(function (index, obj) {
         $(this).text(0);
     })
-    $(".form-check-input").each(function (index, obj){
+
+    $(".form-check-input").each(function (index, obj) {
         $(this).prop('checked', false);
     })
-    $("#capstone-info").hide();
+
+    /*
+        TODO:
+        If you have added an input to index.html that is not a check box
+        or just a numerical value, like those in the incrementation/decrementation boxes,
+        then add some way of reseting each of those inputs to a default state. 
+
+        For example, if you added sliders for the user to use, make sure they all 
+        have a common class such as "form-slider", and 
+        then you can add the following loop to reset them:
+        
+        $(".form-slider").each(function (index, obj) {
+                $(this).val(0); // Or however the input is reset
+        })
+     */
 }

@@ -6,7 +6,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Match Scouting</title>
+    <title>YEAR TYPE Match Scouting</title>
 
     <link rel="shortcut icon" href="images/icon.png">
     <link rel="icon" href="images/icon.png">
@@ -31,232 +31,179 @@
         integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Black+Ops+One" rel="stylesheet">
 
-    <link href = "style.css" rel ="stylesheet">
 </head>
-<body style = "background-color: aliceblue">
-    <div id = "header"></div>
-    <div class = "container mt-5">
-        <div class = "text-center">
-            <h3 id = "current-event">Currently Scouting for Event: </h3>
-        </div>
-        <div class=" mt-5 row justify-content-around">
-            <div class=" pb-3 width-50">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <label class = "mr-3">Match</label>
-                        <select style="height: 2em" id="match-choices">
-                            <option disabled selected value> -- select an option -- </option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class=" pb-3 width-50">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <label class = "mr-3">Team</label>
-                        <select style="height: 2em" id="team-choices">
-                            <option disabled selected value> -- select an option -- </option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class = "" id="main">
-            <div id = "auto" class = "mt-3">
-                <div class = "text-center">
-                    <h1>Autonomous</h1>
-                </div>
-                <div class = "my-4 d-flex justify-content-center">
-                    <div class="btn-toolbar text-center">
-                        <h3>Starting Position</h3>
-                        <div class="btn-group btn-group-toggle ml-3" data-toggle="buttons">
-                            <label class="btn btn-outline-primary active">
-                                <input id = "auto-started_in_loading" class = "data" type="radio" autocomplete="off" checked>Loading Side</label>
-                            <label class="btn btn-outline-primary">
-                                <input id = "auto-started_in_build" class = "data" type="radio" autocomplete="off">Build Side</label>
+<body style="background-color: aliceblue">
+    <div id="header"></div>
+    <div class="container">
+
+        <!--DO NOT CHANGE THE CODE BELOW THIS-->
+        <div>
+            <div class="text-center mt-5">
+                <h3 id="current-event">Currently Scouting for Event: </h3>
+            </div>
+            <div class=" mt-5 row justify-content-around">
+                <div class=" pb-3 width-50">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="mr-3 mt-2">Match</label>
+                            <select class="custom-select" id="match-choices">
+                                <option disabled selected value> -- select an option -- </option>
+                            </select>
                         </div>
                     </div>
                 </div>
-                <div class = "row justify-content-around">
-                    <div class = "text-center col-md-4 pb-3">
-                        <h3>Delivered</h3>
-                        <div class="btn-toolbar pt-3">
-                            <h4 class="pt-1 pr-3">Stone 1.</h4>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-outline-primary active">
-                                    <input type="radio">None</label>
-                                <label class="btn btn-outline-primary">
-                                    <input class = "stone-option data" id="auto-delivery_one_is_stone" type="radio">Stone</label>
-                                <label class="btn btn-outline-primary">
-                                    <input class = "stone-option data" id="auto-delivery_one_is_skystone" type="radio">Skystone</label>
-                            </div>
-                        </div>
-                        <div class="btn-toolbar pt-3">
-                            <h4 class="pt-1 pr-3">Stone 2.</h4>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-outline-primary active">
-                                    <input type="radio">None</label>
-                                <label class="btn btn-outline-primary">
-                                    <input class = "stone-option data" id="auto-delivery_two_is_stone" type="radio">Stone</label>
-                                <label class="btn btn-outline-primary">
-                                    <input class = "stone-option data" id="auto-delivery_two_is_skystone" type="radio">Skystone</label>
-                            </div>
-                        </div>
-                        <div class = "mt-5">
-                            <h3>Extra Stones Delivered</h3>
-                            <div class="d-flex justify-content-center mt-2">
-                                <div class="input-group mt-3 w-75">
-                                    <div class="input-group-prepend">
-                                        <button for="auto-extra_delivers" class="btn btn-outline-secondary change-btn decrement" type="button">-</button>
-                                    </div>
-                                    <div id="auto-extra_delivers" class="form-control data">
-                                        0
-                                    </div>
-                                    <div class="input-group-append">
-                                        <button for="auto-extra_delivers" class="btn btn-outline-secondary change-btn increment" type="button">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-center col-md-4 pb-3">
-                        <h3>Placed</h3>
-                        <div class="d-flex justify-content-center mt-2">
-                            <div class="input-group mt-3 w-75">
-                                <div class="input-group-prepend">
-                                    <button for="auto-stones_placed" class="btn btn-outline-secondary change-btn decrement"
-                                        type="button">-</button>
-                                </div>
-                                <div id="auto-stones_placed" class="form-control data">
-                                    0
-                                </div>
-                                <div class="input-group-append">
-                                    <button for="auto-stones_placed" class="btn btn-outline-secondary change-btn increment"
-                                        type="button">+</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class = "mt-3 row justify-content-around">
-                    <div class = "col-md-4">
-                        <div class="card">
-                            <div class="card-body row ">
-                                <div class=" ml-3 form-check form-check-inline">
-                                    <input class="form-check-input data" type="checkbox" id="auto-foundation_repositioned">
-                                    <h6 class="form-check-label ml-2 mt-1" for="auto-foundation_repositioned" >Foundation Repositioned</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body row ">
-                                <div class=" ml-3 form-check form-check-inline">
-                                    <input class="form-check-input data" type="checkbox" id="auto-parked">
-                                    <h6 class="form-check-label ml-2 mt-1" for="auto-parked">Parked</h6>
-                                </div>
-                            </div>
+                <div class=" pb-3 width-50">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="mr-3 mt-2">Team</label>
+                            <select class="custom-select" id="team-choices">
+                                <option disabled selected value> -- select an option -- </option>
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
-            <hr class = "my-5">
-            <div id = "teleop">
-                <div class="text-center">
-                    <h1>Teleop</h1>
-                </div>
-                <div class="row justify-content-around">
-                    <div class="text-center col-md-4 pb-3">
-                        <h3>Delivered</h3>
-                        <div id="teleop-delivery-stones" class="teleop-stone-option d-flex justify-content-center mt-2">
+        </div>
+        <!--DO NOT CHANGE THE CODE ABOVE THIS-->
+
+        <!--
+            NOTE: The code in Main.js will hide the html in this below div by default.
+            When creating this page, it may be easiest to comment out
+            the line in Main.js that hides this. 
+            REMEMBER TO UNCOMMENT IT WHEN DONE TESTING
+        -->
+        <div id="main">
+            <!-- 
+                Some notes for creating the inputs for this page. 
+
+                1. Follow the Instructions for setting up the back-end index.js first!
+
+                2. To make this page look nice, it is recommended that you have some knowledge
+                    in using bootstrap, especially its row and column features and 
+                    its ability to make a card. Info on how to use Bootstrap can be found through
+                    their documenatation: https://getbootstrap.com/docs/4.0/getting-started/introduction/
+                    by going to the "Components" tab. Try making a seperate html document
+                    and playing with bootstrap until you feel comfortable
+
+                3. For each location you want to retrieve an input from, the tag
+                must have the class "data" as one of its classes and it must
+                have an ID which matches the storage path on the empty match data 
+                object created in the back-end index.js, with "-" seperating 
+                each key. It should look like this: "gameperiod-task".
+                So for example, if your match data object looks like this:
+                gameplay:{
+                    auto: {
+                        "line": 0,
+                        ...
+                    },
+                    teleop: {
+                        "jumps": 0,
+                        ...
+                    }, 
+                    ...
+                }
+                Then the ID for whatever input you are using for keeping track of the 
+                line crossing in auto has to be "auto-line" and the ID for whatever you are 
+                using for keeping track of the jumps in teleop has to be "teleop-jumps".
+
+                4. The code in main.js is capable of retrieving and reseting data from checkboxes 
+                and incrementation/decrementation choices by default. If you need to create 
+                a different form of input, follow the instructions of main.js to retrieve and reset 
+                the values, and MAKE SURE to include the class and ID described in Note 2 above
+                for your new input
+
+                5. Sample HTML:
+
+                    For a checkbox - Note how the input tag has a class of "data" 
+                                    and its ID is the general case as an example. 
+                                    Also, that the label has a "for" attribute which MUST match 
+                                    the ID of the input:
+
+                        <div class="card-body">
+                                <div class="form-check">
+                                    
+                                    <input class="form-check-input data" type="checkbox" id = "gameperiod-task">
+
+                                    <label class="form-check-label" for="gameperiod-task">
+                                        Task 
+                                    </label>
+
+                                </div>
+                            </div>
+                        </div>
+                    
+                    For an incrementation/decrementation box - Note how the tag where we plan to retrieve 
+                                                               the data has a class of "data" and its ID is the general case
+                                                                as an example.
+
+                                                                Also, the + and - buttons have a "for" attribute which MUST 
+                                                                correspond to the ID of the tag where we retrive data and
+                                                                the + and - button MUST have the class "change-btn" as well
+                                                                as either the class "decrement" or "increment" respectively. These
+                                                                attributes and classes are used in the code within main.js for changing
+                                                                the value of the tag where we retrieve data. 
+
+                        <div class=" d-flex justify-content-center mt-2">
                             <div class="input-group mt-3 w-75">
+
                                 <div class="input-group-prepend">
-                                    <button for = "teleop-delivered"class="btn btn-outline-secondary change-btn decrement" type="button">-</button>
+                                    <button for="gameperiod-task" class="btn btn-outline-secondary change-btn decrement" type="button">-</button>
                                 </div>
-                                <div id = "teleop-delivered" class="form-control data">
+
+                                <div id="gameperiod-task" class="form-control data">
                                     0
                                 </div>
+
                                 <div class="input-group-append">
-                                    <button for = "teleop-delivered" class="btn btn-outline-secondary change-btn increment" type="button">+</button>
+                                    <button for="gameperiod-task" class="btn btn-outline-secondary change-btn increment" type="button">+</button>
                                 </div>
+
                             </div>
                         </div>
-                    </div>
-                    <div class="text-center col-md-4 pb-3">
-                        <h3>Placed</h3>
-                        <div id="teleop-place-stones" class="teleop-stone-option d-flex justify-content-center mt-2">
-                            <div class="input-group mt-3 w-75">
-                                <div class="input-group-prepend">
-                                    <button for="teleop-placed" class="btn btn-outline-secondary change-btn decrement" type="button">-</button>
-                                </div>
-                                <div id="teleop-placed" class="form-control data">
-                                    0
-                                </div>
-                                <div class="input-group-append">
-                                    <button for="teleop-placed" class="btn btn-outline-secondary change-btn increment" type="button">+</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class = "d-flex justify-content-center">
-                    <div>
-                        <div class="card">
-                            <div class="card-body text-center row ">
-                                <div class=" ml-3 form-check form-check-inline">
-                                    <input class="form-check-input data" type="checkbox"  id="end-capstone_placed">
-                                    <h6 class="form-check-label ml-2 mt-1" for="end-capstone_placed">Capstone Placed</h6>
-                                </div>
-                            </div>
-                        </div> 
-                        <div id = "capstone-info">
-                            <h3 class = "my-3">Capstone Height</h3>
-                            <div class="input-group mt-4 text-center">
-                                <div class="input-group-prepend">
-                                    <button for="end-capstone_height" class="btn btn-outline-secondary change-btn decrement" type="button">-</button>
-                                </div>
-                                <div id="end-capstone_height" class="form-control data">
-                                    0
-                                </div>
-                                <div class="input-group-append">
-                                    <button for="end-capstone_height" class="btn btn-outline-secondary change-btn increment" type="button">+</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class = "mt-3 row justify-content-around">
-                    <div class = "col-md-4">
-                        <div class="card">
-                            <div class="card-body row ">
-                                <div class=" ml-3 form-check form-check-inline">
-                                    <input class="form-check-input data" type="checkbox" id="end-foundation_repositioned">
-                                    <h6 class="form-check-label ml-2 mt-1" for="end-foundation_repositioned" >Foundation Repositioned</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body row ">
-                                <div class=" ml-3 form-check form-check-inline">
-                                    <input class="form-check-input data" type="checkbox" id="end-parked">
-                                    <h6 class="form-check-label ml-2 mt-1" for="end-parked">Parked</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            -->
+
+            <div class="mt-5">
+                <div class="row justify-content-center">
+                    <!--TODO: Not necessary, but use this area for information 
+                              about the robot before the match begins, like if it is a 
+                            no show.
+                    -->
+
                 </div>
             </div>
-            <div class = "mt-3 ml-3 float-right">
-                <div data-toggle="modal" data-target="#save-modal" class = "btn btn-success btn-lg">Save</div>
+
+            <div class="mt-5">
+                <h1 class="text-center">Autonomous</h1>
+                <!--TODO: Insert Scout Inputs for Autonomous here-->
+
             </div>
+
+
+            <div class="mt-5">
+                <h1 class="text-center">Teleop</h1>
+                <!--TODO: Insert Scout Inputs for Teleop here-->
+
+            </div>
+
+
+            <div class="mt-5">
+                <h3 class="text-center">Endgame</h3>
+                <!--TODO: Insert Scout Inputs for Endgame here-->
+
+            </div>
+
+            <!--No need to change the save button-->
+            <div class="mt-3 ml-3 float-right">
+                <div data-toggle="modal" data-target="#save-modal" class="btn btn-success btn-lg">Save</div>
+            </div>
+
+        </div>
+        <div style="height:15em">
         </div>
     </div>
-    <div style = "height: 20em"></div>
 
+    <!--No need to change the save modal-->
     <!-- Save Modal -->
     <div class="modal fade" id="save-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -278,22 +225,17 @@
         </div>
     </div>
 
-    <!-- <div id = "test">
-        <div id = "test-button"class = "btn btn-outline-primary">Push Me</div>
-    </div> -->
-
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="/__/firebase/7.4.0/firebase-app.js"></script>
-    
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-         https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="/__/firebase/7.4.0/firebase-analytics.js"></script>
-    
-    <!-- Initialize Firebase -->
-    <script src="/__/firebase/init.js"></script>
-
     <!-- Set Up Program Files-->
     <script src="js/header.js"></script>
     <script src="js/main.js"></script>
     <script src="js/userServer.js"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="/__/firebase/7.8.2/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="/__/firebase/7.8.2/firebase-analytics.js"></script>
+
+    <!-- Initialize Firebase -->
+    <script src="/__/firebase/init.js"></script>
 </body>

@@ -96,6 +96,12 @@ This will set up the event's schedule as well as each team in the app's storage,
 
 If you would like to switch back to an event that was already set up, either to see the scouted data again or test somethings, you will have to go into the Firebase Online Console for the project and go to the Database tab and then in the "MetaData" collection, set the current event to the desired event's event key. But make sure the event already exists in the database. 
 
+**IMPORTANT NOTE: To use less data reads from the server, event info such as the name of the event and schedule are cached on the client side and on a Firebase CDN. The cache on the CDN lasts for 10 minutes, meaning the event name and schedule _WILL NOT UPDATE ON THE APP FOR 10 MINUTES._ So the admin is reponsible for setting up the event, at least 10 minutes prior to the use of the app.**
+
+**A way to manually refresh the cache on the CDN is to deploy the app once again.** 
+
+**To refresh cache on a device, for PC: Ctrl + r, Mac: Cmd + Shift + r, for iphones: double click home button and swipe up on safari**
+
 **FTC Admin:**
 
 At the time of this App's initial creation, the FTC counterpart of The Blue Alliance, The Orange Alliance, is not as quick to update their website with match schedules of events. So unfortunately, the FTC admin has to input the teams and match schedule manually rather than relying on  a website. 
@@ -106,11 +112,15 @@ Generally a list of teams competing at the competition is sent out beforehand. T
 
 **Important Note:** If you click "Save" for either the team list or the match schedule, it will create a blank storage for everything. Meaning, **if the event has already had matches scouted, the data will be deleted.** So only select an event to be edited if it hasn't had any scouting. If you want to switch to an old event to see the data collected or any other reason, you will have to go into the Firebase Online Console for the project and go to the Database tab and then in the "MetaData" collection, set the current event to the desired event's name that you used.
 
+**Another note:** While the FRC app cache's data on the Firebase CDN and the client side, the FTC app only cache's data on the client side. Meaning that there is no 10 minute gap for when the schedule will update on the app. The client side cache refreshes every 5 minute, but it is easy to refresh cache on a device. 
+
+**To refresh cache on a device, for PC: Ctrl + r, Mac: Cmd + Shift + r, for iphones: double click home button and swipe up on safari**
+
 ## Issues With The App
 
-1. Quota for Reads per day: The free plan for Firebase offers 50,000 reads per day. For a few people testing the app, this is more than enough, but when the whole team uses the app for scouting and viewing the data, this can build up fast. At Miami Valley 2020, after our scouting meeting at night, we had exceeded our quota and the app would not work because we weren't able to use any more reads. 
+1. Quota for Reads per day: The free plan for Firebase offers 50,000 reads per day. For a few people testing the app, this is more than enough, but when the whole team uses the app for scouting and viewing the data, this can build up fast. At Miami Valley 2020, after our scouting meeting at night, we had exceeded our quota and the app would not work because we weren't able to use any more reads. Since then, I have made the app cache certain data that doesn't change often, such as the event schedule, event name, and the empty match data. This will certainly reduce the amount of reads the app makes, but due to the 2020 season ending early, we were unable to verify that it is enough to stay well within the quota. 
 
-	There are three things the team can do to avoid issues with the quota
+	Regardless, there are three things the team can do to avoid issues with the quota
 	
 	* Have the scouts only use the scouting side of the app on the day before our hotel night scout meeting. If lots of people are viewing the analytical parts before the meeting, the quota could run out or almost be out during the meeting. Instead, have the scouts scout and have one person viewing the data, (possibly put it on a monitor for others to see). On any other day, anyone can view the data, because it won't matter if the quota runs out because there is no official meeting about the data. 
 

@@ -11,6 +11,7 @@ const app = express()
 
 module.exports = {
    app,
-   db, 
-   functions
+   db,
+   functions,
+   admin
 };

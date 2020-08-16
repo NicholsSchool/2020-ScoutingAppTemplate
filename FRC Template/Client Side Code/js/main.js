@@ -1,6 +1,6 @@
-document.addEventListener("DOMContentLoaded", event =>{
+document.addEventListener("DOMContentLoaded", event => {
     $("#main").hide(); // Comment this line out when creating index.html. 
-                      // REMEMBER TO UNCOMMENT WHEN DONE
+    // REMEMBER TO UNCOMMENT WHEN DONE
 
     // Used for changing values of incrementation/decrementation inputs
     $(".change-btn").on("click", function () {
@@ -18,31 +18,29 @@ document.addEventListener("DOMContentLoaded", event =>{
 /**
  * Sets which event is being scoutted ands sets up matches
  */
-function setUpEvent()
-{
+function setUpEvent() {
     getCurrentEvent()
-    .then((event) => {
-        $("#current-event").text($("#current-event").text() + event);
-        setUpMatchOptions()
-    })
+        .then((event) => {
+            $("#current-event").text($("#current-event").text() + event);
+            setUpMatchOptions()
+        })
 }
 
 /**
  * Sets up each match option for the event
  */
-function setUpMatchOptions()
-{
+function setUpMatchOptions() {
     getMatches()
-    .then((matches) => {
-        for (match of matches)
-            $("#match-choices").append(getMatchOption(match));
+        .then((matches) => {
+            for (match of matches)
+                $("#match-choices").append(getMatchOption(match));
 
-        // Whenever the selected match changes, set up the team options for that match
-        $("#match-choices").on("change", function () {
-            setUpTeamOptions($("#match-choices option:selected").text());
-            $("#main").hide();
+            // Whenever the selected match changes, set up the team options for that match
+            $("#match-choices").on("change", function () {
+                setUpTeamOptions($("#match-choices option:selected").text());
+                $("#main").hide();
+            })
         })
-    })
 }
 
 /**
@@ -50,33 +48,32 @@ function setUpMatchOptions()
  * 
  * @param {String} match - The match number to be scoutted
  */
-function setUpTeamOptions(match)
-{
+function setUpTeamOptions(match) {
     getTeamsInMatch(match)
-    .then((teams) => {
+        .then((teams) => {
 
-        //default state
-        $("#team-choices").html("<option disabled selected value> -- select an option -- </option>");
-        $("#team-choices").removeClass("text-white");
-        $("#team-choices").css("background-color", "")
+            //default state
+            $("#team-choices").html("<option disabled selected value> -- select an option -- </option>");
+            $("#team-choices").removeClass("text-white");
+            $("#team-choices").css("background-color", "")
 
-        // add choices
-        for(team of teams.blue)
-            $("#team-choices").append(getTeamOption(team, "blue"));
-        for(team of teams.red)
-            $("#team-choices").append(getTeamOption(team, "red"));
+            // add choices
+            for (team of teams.blue)
+                $("#team-choices").append(getTeamOption(team, "blue"));
+            for (team of teams.red)
+                $("#team-choices").append(getTeamOption(team, "red"));
 
-        // Resets and reveals the form when a new team is selected
-        $("#team-choices").on("change", function () {
-            if ($("option:selected", this).hasClass("blue"))
-                $(this).css("background-color", "blue")
-            else
-                $(this).css("background-color", "red")
-            $(this).addClass("text-white");
-            reset();
-            $("#main").show();
+            // Resets and reveals the form when a new team is selected
+            $("#team-choices").on("change", function () {
+                if ($("option:selected", this).hasClass("blue"))
+                    $(this).css("background-color", "blue")
+                else
+                    $(this).css("background-color", "red")
+                $(this).addClass("text-white");
+                reset();
+                $("#main").show();
+            })
         })
-    })
 }
 
 /**
@@ -102,49 +99,49 @@ function getTeamOption(team, color) {
  * 
  * @return all the data that was recorded during scoutting
  */
-async function getInputtedData(){
-   return getEmptyMatchData()
-    .then(data =>{
-        data.match = $("#match-choices option:selected").text();
-        data.team = $("#team-choices option:selected").text();
-        $(".data").each(function (index, obj) {
-            var path = $(this).attr("id").split("-");
-            console.log(path);
-            //This temp object is used to traverse down the data in the path given
-            var temp = data.gamePlay;
-            for (i = 0; i < path.length - 1; i++)
-                temp = temp[path[i]];
+async function getInputtedData() {
+    return getEmptyMatchData()
+        .then(data => {
+            data.match = $("#match-choices option:selected").text();
+            data.team = $("#team-choices option:selected").text();
+            $(".data").each(function (index, obj) {
+                var path = $(this).attr("id").split("-");
+                console.log(path);
+                //This temp object is used to traverse down the data in the path given
+                var temp = data.gamePlay;
+                for (i = 0; i < path.length - 1; i++)
+                    temp = temp[path[i]];
 
-            /* 
-                TODO:
-                If you have added an input to index.html that is not a check box 
-                    or just a numerical value, like those in the incrementation/decrementation boxes,
-                    then add an else if statement that checks to see if the current object
-                    is one of the ones you've added, and then add a line setting "temp[path[i]]" equal
-                    to the input
-                    
-                For example, if you added sliders for the user to use, make sure they all have a common class
-                such as "form-slider", and then you can add an else if stament as such: 
+                /* 
+                    TODO:
+                    If you have added an input to index.html that is not a check box 
+                        or just a numerical value, like those in the incrementation/decrementation boxes,
+                        then add an else if statement that checks to see if the current object
+                        is one of the ones you've added, and then add a line setting "temp[path[i]]" equal
+                        to the input
+                        
+                    For example, if you added sliders for the user to use, make sure they all have a common class
+                    such as "form-slider", and then you can add an else if stament as such: 
+    
+                    else if( $(this).hasClass("form-slider") )
+                        temp[path[i]] = $(this).val(); // Or however the value is retrieved
+                */
+                // Records data here 
+                if ($(this).hasClass("form-check-input"))  // Records check box data
+                    temp[path[i]] = $(this).is(':checked') ? 1 : 0;
 
-                else if( $(this).hasClass("form-slider") )
-                    temp[path[i]] = $(this).val(); // Or however the value is retrieved
-            */
-            // Records data here 
-            if ($(this).hasClass("form-check-input"))  // Records check box data
-                temp[path[i]] = $(this).is(':checked') ? 1 : 0;
+                // If needed, add else if statement here
 
-            // If needed, add else if statement here
-
-            else
-                temp[path[i]] = parseInt($(this).text().trim()); // Records numerical data
+                else
+                    temp[path[i]] = parseInt($(this).text().trim()); // Records numerical data
+            });
+            return data;
         });
-        return data;
-    });
 
 }
 
 //Resets the form to a blank state
-function reset(){
+function reset() {
     $(".form-control").each(function (index, obj) {
         $(this).text(0);
     })

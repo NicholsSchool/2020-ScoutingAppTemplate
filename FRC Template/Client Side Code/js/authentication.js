@@ -12,24 +12,24 @@ $('#header').load("header.html", function () {
 });
 
 
-document.addEventListener("DOMContentLoaded", event => {      
+document.addEventListener("DOMContentLoaded", event => {
     /**
      * Sign in the user with a google sign in redirect whenever sign in button is clicked
      */
     $(document).on("click", "#signIn", () => {
         firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-        .then(() => {
-            var provider = new firebase.auth.GoogleAuthProvider();
-            firebase.auth().signInWithRedirect(provider)
-            firebase.auth().getRedirectResult().then(function (result) {
-                // No need to do anything
-            }).catch(function (error) {
+            .then(() => {
+                var provider = new firebase.auth.GoogleAuthProvider();
+                firebase.auth().signInWithRedirect(provider)
+                firebase.auth().getRedirectResult().then(function (result) {
+                    // No need to do anything
+                }).catch(function (error) {
+                    console.error(error)
+                });
+            })
+            .catch((error) => {
                 console.error(error)
             });
-        })
-        .catch( (error) => {
-                console.error(error)
-        });
     })
 
     /**
@@ -57,18 +57,16 @@ function signInResponse() {
 /**
  * Hides the page and reveals the sign in warning and shows the sign in button
  */
-function signOutResponse()
-{
+function signOutResponse() {
     console.log("Signed out")
     $("#content").hide();
     // If the warning doesn't exist, make it, otherwise show it
-    if ($("#warning").length == 0) 
+    if ($("#warning").length == 0)
         $("#content").before(
             `<h1 id = "warning" class = "text-center mt-3"> You must sign in to be able to use the app </h1>`);
-    else    
+    else
         $("#warning").show();
 
     $("#signIn").show();
     $("#signOut").hide();
 }
-

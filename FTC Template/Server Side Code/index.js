@@ -1,8 +1,8 @@
-
 const { app, db, functions } = require('./server');
 require("./setup");
 const retrieval = require("./retrieval");
 const gameData = require("./data");
+const verification = require("./verification");
 require("./predictions");
 
 /**
@@ -12,31 +12,34 @@ require("./predictions");
  */
 app.post("/saveData", (req, res) => {
     var data = req.body;
-    retrieval.getCurrentEvent()
-    .then((event) => {
-        let teamRef = event.collection("Teams").doc(data.team);
-        db.runTransaction((transaction) => {
-           return transaction.get(teamRef)
-            .then(teamDoc => {
-               var teamData = teamDoc.data();
-                if ( teamData.matches.hasOwnProperty(data.match) )
-                {
-                    console.log("Match " + data.match + " for team " + data.team  + " Already scouted")
-                    return
-                }
-               var gamePlay = convertToProperData(data.gamePlay);
-               teamData.matches[data.match] = gamePlay;
-               var newAverages = updateAverages(teamData.averages, gamePlay, Object.keys(teamData.matches).length);
-               transaction.update(teamRef, {matches: teamData.matches, averages: newAverages});
+    //First we verify the user. If they aren't valid, the code skips to the catch()
+    verification.verifyAuthToken(req)
+        .then((decoded) => {
+            return retrieval.getCurrentEvent()
+        })
+        .then((event) => {
+            let teamRef = event.collection("Teams").doc(data.team);
+            db.runTransaction((transaction) => {
+                return transaction.get(teamRef)
+                    .then(teamDoc => {
+                        var teamData = teamDoc.data();
+                        if (teamData.matches.hasOwnProperty(data.match)) {
+                            console.log("Match " + data.match + " for team " + data.team + " Already scouted")
+                            return
+                        }
+                        var gamePlay = convertToProperData(data.gamePlay);
+                        teamData.matches[data.match] = gamePlay;
+                        var newAverages = updateAverages(teamData.averages, gamePlay, Object.keys(teamData.matches).length);
+                        transaction.update(teamRef, { matches: teamData.matches, averages: newAverages });
+                    })
             })
+                .then((result) => {
+                    res.send("done");
+                })
+                .catch((err) => {
+                    console.error(err);
+                })
         })
-        .then((result) => {
-            res.send("done");
-        })
-        .catch((err) => {
-            console.error(err);
-        })
-    })
 })
 
 
@@ -46,18 +49,15 @@ app.post("/saveData", (req, res) => {
  * 
  * @param {*} jsonData - a match data storage object filled with scoutted data 
  */
-function convertToProperData(jsonData)
-{
+function convertToProperData(jsonData) {
     var pointValues = gameData.getDataPointValues();
     jsonData.totalScore = 0;
-    for(gamePeriod in jsonData)
-    {
-        if(gamePeriod == "totalScore")
+    for (gamePeriod in jsonData) {
+        if (gamePeriod == "totalScore")
             continue;
         jsonData[gamePeriod].score = 0
-        for(action in jsonData[gamePeriod])
-        {
-            if(action == "score")
+        for (action in jsonData[gamePeriod]) {
+            if (action == "score")
                 continue;
             jsonData[gamePeriod][action] = Number(jsonData[gamePeriod][action]);
             jsonData[gamePeriod].score += jsonData[gamePeriod][action] * pointValues[gamePeriod][action];
@@ -73,20 +73,18 @@ function convertToProperData(jsonData)
  * @param {*} newData - the new scoutted data
  * @param {*} num - the amount of matches now scoutted for the team 
  */
-function updateAverages(averages, newData, num)
-{
-    if(num == 1)
+function updateAverages(averages, newData, num) {
+    if (num == 1)
         return newData;
 
-    for(gamePeriod in averages)
-        for(score in averages[gamePeriod])
-        {
+    for (gamePeriod in averages)
+        for (score in averages[gamePeriod]) {
             var val = averages[gamePeriod][score] * (num - 1);
             val += Number(newData[gamePeriod][score]);
-            averages[gamePeriod][score] = val/num;
+            averages[gamePeriod][score] = val / num;
         }
     var val = averages.totalScore * (num - 1) + Number(newData.totalScore);
-    averages.totalScore = val/num;
+    averages.totalScore = val / num;
     return averages;
 }
 
@@ -102,24 +100,31 @@ app.get("/getRanking", (req, res) => {
     var path = req.query.path;
     var numTeams = Number(req.query.numTeams);
     var order = req.query.isReversed == "true" ? 'asc' : "desc";
-    retrieval.getCurrentEvent()
-    .then((event) => {
-        if(numTeams <= 0)
-            return event.collection("Teams").orderBy(path, order).get();
-        else
-            return event.collection("Teams").orderBy(path, order).limit(numTeams).get();
-    })
-    .then((snap) => {
-        var data = [];
-        path = path.split(".");
-        snap.forEach(doc => {
-            var value = doc.data();
-            for (i = 0; i < path.length; i++)
-                value = value[path[i]];
-            data.push([doc.id, value]);
-        });
-        res.send(data);
-    })
+    //First we verify the user. If they aren't valid, the code skips to the catch()
+    verification.verifyAuthToken(req)
+        .then((decoded) => {
+            return retrieval.getCurrentEvent()
+        })
+        .then((event) => {
+            if (numTeams <= 0)
+                return event.collection("Teams").orderBy(path, order).get();
+            else
+                return event.collection("Teams").orderBy(path, order).limit(numTeams).get();
+        })
+        .then((snap) => {
+            var data = [];
+            path = path.split(".");
+            snap.forEach(doc => {
+                var value = doc.data();
+                for (i = 0; i < path.length; i++)
+                    value = value[path[i]];
+                data.push([doc.id, value]);
+            });
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(400).send("Error in getting ranking");
+        })
 })
 
 exports.app = functions.https.onRequest(app);

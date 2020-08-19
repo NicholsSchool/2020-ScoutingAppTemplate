@@ -92,7 +92,7 @@ to launch the app. If you continue to work after deploying but only make a chang
 **Additonal Note: At the bottom of every html page are a few Firebase SDKs listed, for example:**
 
     <script src="/__/firebase/7.8.2/firebase-app.js"></script>
-**These SDKs may need to be updated to their current versions for your year. To do this, just replace each SDK on every HTML page with the current version **
+**These SDKs may need to be updated to their current versions for your year. To do this, just replace each SDK on every HTML page with the current version**
 
 ## Usage 
 

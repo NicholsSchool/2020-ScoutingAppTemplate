@@ -8,7 +8,11 @@ This project is a part of Arnav Parashar's (Nichols '20) Senior Thesis. The goal
 
 ## Setup
 
-First setup the firebase project on the online firebase console. Log in to any google account and go to the [firebase console](https://console.firebase.google.com/). Create a new project. The project name should be the year, the type of competiton (FTC or FRC) and then the word "Scouting". So for example, 2020FRCScouting. Follow the steps to create the project. Once created, navigate to the "Database" tab on the left of the console and set up the Database. Follow the steps, and begin in **Testing**, _not_ Production. 
+First setup the firebase project on the online firebase console. Log in to any google account and go to the [firebase console](https://console.firebase.google.com/). Create a new project. The project name should be the year, the type of competiton (FTC or FRC) and then the word "Scouting". So for example, 2020FRCScouting. Follow the steps to create the project. 
+
+Once created, navigate to the "Database" tab on the left of the console and set up the Database. Follow the steps, and begin in **Testing**, _not_ Production. 
+
+Also go to the "Authentication" tab and then the **Sign In Method** tab and enable Google as a sign in provider. 
 
 <hr/>
 
@@ -52,8 +56,20 @@ The server side code in this repo uses the "Express" library, to make your new p
  
 <hr/>
 
-Also, since we started in Testing mode for our database, the default rules make it so that after one month, the database will no longer be accessible. If a future student would like to add the functionality of having accounts for each scout, then you can edit the rules so that people with accounts can access the data. 
-As of right now, the app has no such functionality for accounts, so you can instead adjust the rules by going into "firestore.rules" and adding a year to the timestamp date, making the database accessible until that new date. Obviously, this is not the most secure way to go about the storage rules, as technically anyone can read and write to the database, but it is unlikely someone will try to tamper with our data and as long as we keep the url within the team, the app should be fine. 
+Also, since we started in Testing mode for our database, the default rules make it so that the data is accessible by anyone at all for one month. We do not want this to be allowed, the data should only be accessible from our server code. The only exception to this is team info for the Rankings page.
+
+ In your **firestore.rules** file and in the rules section of firestore on the firebase website (can be found by going to database > Cloud Firestore > Rules) paste the following rules: 
+ 
+	rules_version = '2';
+	service cloud.firestore {
+	  match /databases/{database}/documents {
+				match /Events/{event}/Teams/{team} { 
+	      		allow read: if request.auth.uid != null
+	            allow write: if false
+	         }
+		  allow read, write: if false
+	  }
+	}
 
 <hr/>
 
@@ -63,11 +79,20 @@ For testing the app, use
 	
 	firebase serve
 
-in the terminal to locally host the app on your laptop. Once the app is all good or if the local hosting isn't working properly, use 
+in the terminal to locally host the app on your laptop.
+
+Once the app is all good or if the local hosting isn't working properly, use 
 
 	firebase deploy
 
 to launch the app. If you continue to work after deploying but only make a change to the front end, use `firebase deploy --only hosting` for a quicker deploy, or `firebase deploy --only functions` for vice versa. 
+
+<hr />
+
+**Additonal Note: At the bottom of every html page are a few Firebase SDKs listed, for example:**
+
+    <script src="/__/firebase/7.8.2/firebase-app.js"></script>
+**These SDKs may need to be updated to their current versions for your year. To do this, just replace each SDK on every HTML page with the current version **
 
 ## Usage 
 
@@ -100,7 +125,7 @@ If you would like to switch back to an event that was already set up, either to 
 
 **A way to manually refresh the cache on the CDN is to deploy the app once again.** 
 
-**To refresh cache on a device, for PC: Ctrl + r, Mac: Cmd + Shift + r, for iphones: double click home button and swipe up on safari**
+**To refresh cache on a device, for PC: Ctrl + Shift + r, Mac: Cmd + Shift + r, for iphones: double click home button and swipe up on safari**
 
 **FTC Admin:**
 
@@ -114,7 +139,7 @@ Generally a list of teams competing at the competition is sent out beforehand. T
 
 **Another note:** While the FRC app cache's data on the Firebase CDN and the client side, the FTC app only cache's data on the client side. Meaning that there is no 10 minute gap for when the schedule will update on the app. The client side cache refreshes every 5 minute, but it is easy to refresh cache on a device. 
 
-**To refresh cache on a device, for PC: Ctrl + r, Mac: Cmd + Shift + r, for iphones: double click home button and swipe up on safari**
+**To refresh cache on a device, for PC: Ctrl + Shift + r, Mac: Cmd + Shift + r, for iphones: double click home button and swipe up on safari**
 
 ## Issues With The App
 
@@ -130,7 +155,6 @@ Generally a list of teams competing at the competition is sent out beforehand. T
 	
 2. Wifi. If we attend an event with no wifi or cellular service, the team will not be able to access and use the app. So always make and bring paper scouting forms to events and a group of students can insert the paper data into the app in a location with wifi or afterwards in the hotel. 
 
-3. Security. The app doesn't have any authentication of users, so really anyone could use the app and put in nonsense data for scouting or log on to the admin page and switch the event. It is very unlikely that someone would do something like this, but as a safeguard, keep the url amongst team members only. Firebase does offer code to authenticate users, and this could be a feature added to the app in the future and it would also allow us to share the app with multiple teams. 
 
 
 ## Useful Resources

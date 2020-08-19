@@ -3,9 +3,8 @@
  * 
  * @return the current event being scoutted
  */
-async function getCurrentEvent()
-{
-  return  $.get('/getCurrentEvent', (event) => {
+async function getCurrentEvent() {
+    return $.get('/getCurrentEvent', (event) => {
         return event;
     })
 }
@@ -26,8 +25,7 @@ async function getCurrentEventID() {
  * 
  * @return a list of all teams in the current event
  */
-async function getAllTeams()
-{
+async function getAllTeams() {
     return $.get('/getAllTeams', (teams) => {
         return teams;
     })
@@ -62,7 +60,7 @@ async function getTeamsInMatch(match) {
  * @return an empty storage object for the data being scoutted
  */
 async function getEmptyMatchData() {
-   return $.get('/getEmptyData', (emptyData) => {
+    return $.get('/getEmptyData', (emptyData) => {
         return emptyData;
     })
 }
@@ -73,25 +71,38 @@ async function getEmptyMatchData() {
  * @param {Number} numTeams - the number of teams to have in the list
  * @param {Boolean} isReversed - true if ranked list should be reversed, false otherwise
  */
-async function getRankings(path, numTeams, isReversed)
-{
+async function getRankings(path, numTeams, isReversed) {
     console.log("Is reversed: " + isReversed);
-    return $.get('/getRanking?path=' + path + '&numTeams=' + numTeams + "&isReversed=" + isReversed, (data) => {
-        return data;
-    })
+    return firebase.auth().currentUser.getIdToken(true)
+        .then((idToken) => {
+            return $.ajax({
+                url: '/getRanking?path=' + path + '&numTeams=' + numTeams + "&isReversed=" + isReversed,
+                headers: { 'Authorization': idToken },
+                method: 'GET',
+            })
+        })
 }
 
 /**
  * Saves the data that was scoutted and resets the form
  */
-function saveData()
-{
+function saveData() {
     getInputtedData()
-    .then((data) => {
-        $.post('/saveData', data);
-        reset();
-        $("#main").hide();
-    })
+        .then((scouttedData) => {
+            firebase.auth().currentUser.getIdToken(true)
+                .then((idToken) => {
+                    return $.ajax({
+                        url: "/saveData",
+                        headers: { 'Authorization': idToken },
+                        data: scouttedData,
+                        method: 'POST',
+                    })
+                })
+                .then(() => {
+                    reset();
+                    $("#main").hide();
+                })
+        })
 }
 
 /**
@@ -101,11 +112,17 @@ function saveData()
  * @param {*} redAlliance - a list of teams in the red alliance
  * @return the predicted scores of two alliances
  */
-async function getPrediction(blueAlliance, redAlliance){
+async function getPrediction(blueAlliance, redAlliance) {
     console.log("Getting Prediction")
-    return $.get('/getWinner', {'blue': blueAlliance, 'red': redAlliance}, (prediction) => {
-        return prediction;
-    })
+    return firebase.auth().currentUser.getIdToken(true)
+        .then((idToken) => {
+            return $.ajax({
+                url: "/getWinner",
+                headers: { 'Authorization': idToken },
+                data: { 'blue': blueAlliance, 'red': redAlliance },
+                method: 'GET',
+            })
+        })
 }
 
 /**
@@ -114,18 +131,28 @@ async function getPrediction(blueAlliance, redAlliance){
  * @return the data stored for a given team
  */
 async function getTeamData(team) {
-    return $.get('/getTeamData', {'team': team}, (teamData) => {
-        return teamData;
-    })
+    return firebase.auth().currentUser.getIdToken(true)
+        .then((idToken) => {
+            return $.ajax({
+                url: "/getTeamData",
+                headers: { 'Authorization': idToken },
+                data: { 'team': team },
+                method: 'GET',
+            })
+        })
 }
 
 /**
  * Returns a list of the data for each and every team
  * @return a list of the data for each and every team
  */
-async function getAllTeamData()
-{
-    return $.get('/getAllTeamData', (allTeamData) => {
-        return allTeamData
-    })
+async function getAllTeamData() {
+    return firebase.auth().currentUser.getIdToken(true)
+        .then((idToken) => {
+            return $.ajax({
+                url: "/getAllTeamData",
+                headers: { 'Authorization': idToken },
+                method: 'GET',
+            })
+        })
 }

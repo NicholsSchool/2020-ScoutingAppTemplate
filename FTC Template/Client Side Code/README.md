@@ -3,7 +3,6 @@
 The following files are the only that are required to be adjusted for the client side of the app:
 
 * index.html
-* rankings.html
 * main.js (For some cases)
 * teamInfo.html (optional)
 
@@ -11,28 +10,13 @@ Each page has commented instructions explaining how to adjust them. The same com
 
 You can also look at the code for the 2020FTCScouting app as an example. 
 
+**NOTE: In Previous versions editing ranking.html was required. No edits to ranking.html are necessary anymore**
+
 ### Title 
 
 Change the title tag of each page. Go through each .html page (excluding 404.html and header.html) and fill in the year and type of competition, FRC or FTC, for the title tag at the top of the file:
 
 	<title>YEAR TYPE Match Scouting</title>
-
-
-## Rankings.html
-
-The rankings page uses Firebase on the client side of the code, as opposed to all the other pages which rely on the server side code. It does this so that it can provide real time updates to the ranking tables the user views. To link it to your firebase project, you need to edit the config.
-
-(Located on Bottom of file)
-
-On the firebase console, navigate to the project setting and find the apikey, the authdomain, and the projectID, and paste them here. 
-	        
-	var config = {
-	    apiKey: "INSERT_YOUR_API_KEY_HERE",
-	    authDomain: "INSERT_YOUR_AUTH_DOMAIN_HERE",
-	    projectId: "INSERT_YOUR_PROJECT_ID_HERE",
-	};
-	firebase.initializeApp(config);
-	var db = firebase.firestore();
 	
 ## Index.html
 **Set up the server side code for data.js BEFORE adjusting this page**

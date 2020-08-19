@@ -12,7 +12,7 @@ First setup the firebase project on the online firebase console. Log in to any g
 
 Once created, navigate to the "Database" tab on the left of the console and set up the Database. Follow the steps, and begin in **Testing**, _not_ Production. 
 
-Also go to the "Authentication" tab and then the **Sign In Method** tab 
+Also go to the "Authentication" tab and then the **Sign In Method** tab and enable Google as a sign in provider. 
 
 <hr/>
 
@@ -86,6 +86,13 @@ Once the app is all good or if the local hosting isn't working properly, use
 	firebase deploy
 
 to launch the app. If you continue to work after deploying but only make a change to the front end, use `firebase deploy --only hosting` for a quicker deploy, or `firebase deploy --only functions` for vice versa. 
+
+<hr />
+
+**Additonal Note: At the bottom of every html page are a few Firebase SDKs listed, for example:**
+
+    <script src="/__/firebase/7.8.2/firebase-app.js"></script>
+**These SDKs may need to be updated to their current versions for your year. To do this, just replace each SDK on every HTML page with the current version **
 
 ## Usage 
 

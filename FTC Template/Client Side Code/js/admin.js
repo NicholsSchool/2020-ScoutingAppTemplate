@@ -11,13 +11,13 @@ document.addEventListener("DOMContentLoaded", event => {
             setUpEventOptions();
         }
     });
-    
+
     $("#create-button").on("click", cardClick)
 
     setEnterResponse($('.info'))
-    $("#save-teams").on("click", function(){
-        
-        if(!eventError()){
+    $("#save-teams").on("click", function () {
+
+        if (!eventError()) {
             var event = getUserInputtedEventName();
             var teams = getInputtedTeamList()
             saveTeamsToServer(event, teams);
@@ -26,32 +26,32 @@ document.addEventListener("DOMContentLoaded", event => {
             $('#matches').show();
         }
     })
-    $("#save-match-btn").on("click", function(){
+    $("#save-match-btn").on("click", function () {
         console.log("Save clicked")
-        if(eventError())
+        if (eventError())
             return;
         var responseText = "";
         var userMatches = {}
         var teams = getInputtedTeamList();
-        $(".match-info").each(function(index, obj){
+        $(".match-info").each(function (index, obj) {
             console.log("Looping through match " + index)
             var match = {};
             match[redID] = [];
             match[blueID] = [];
-            $(this).children(".form-control").each(function(childIndex, childObj){
+            $(this).children(".form-control").each(function (childIndex, childObj) {
                 var val = $(this).val();
-                if(val == "")
+                if (val == "")
                     responseText += "Match " + (index + 1) + " has empty team at spot " + (childIndex + 1) + ".<br>";
-                else if(!teams.includes(val))
+                else if (!teams.includes(val))
                     responseText += "Match " + (index + 1) + " at spot " + (childIndex + 1) + " has teams not saved for event.<br>"
-                else if(match[redID].includes(val) || match[blueID].includes(val))
+                else if (match[redID].includes(val) || match[blueID].includes(val))
                     responseText += "Match " + (index + 1) + " repeats teams.<br>";
                 else
                     match[$(this).attr('data-alliance')].push(val);
             })
             userMatches[index + 1] = match;
         })
-        if(responseText.length != 0)
+        if (responseText.length != 0)
             responseText += "Save Failed!";
         else {
             responseText += "Matches Save Successful!"
@@ -61,22 +61,21 @@ document.addEventListener("DOMContentLoaded", event => {
             $('#set-btns').show();
         }
         $('#save-matches-modal .modal-body').html(responseText);
-        
+
         $('#save-matches-modal').modal('show')
 
     })
 
-    $('#delete-last-match-btn').on("click", function(){
+    $('#delete-last-match-btn').on("click", function () {
         $(".match-info").last().remove();
-        matchNum --;
+        matchNum--;
     })
 
     $('#set-event-btn').on("click", setEvent);
     $('#add-match-btn').on("click", addMatchLine)
 })
 
-function getInputtedTeamList()
-{
+function getInputtedTeamList() {
     teams = [];
     $(".team-info").each(function (index, obj) {
         if ($(obj).val() != "")
@@ -88,18 +87,15 @@ function getInputtedTeamList()
 /**
  * Returns the name of the event inputted by the admin
  */
-function getUserInputtedEventName()
-{
+function getUserInputtedEventName() {
     return $('#event-name-input').val().trim();
 }
 
 /**
  * Returns true if the user did not input an event name
  */
-function eventError()
-{
-    if ($('#event-name-input').val() == "")
-    {
+function eventError() {
+    if ($('#event-name-input').val() == "") {
         $('#event-name-input').addClass("is-invalid");
         return true;
     }
@@ -107,8 +103,7 @@ function eventError()
     return false;
 }
 
-function cardClick()
-{
+function cardClick() {
     $('#event-form').show();
     $('#event-name').show();
     $('#create-card').hide();
@@ -119,10 +114,9 @@ function cardClick()
  * Binds the given element to a function called when the "enter" key is pressed
  * @param {*} element - the html element to bind
  */
-function setEnterResponse(element)
-{
-    element.on('keypress', function(e){
-        if (e.which == 13) 
+function setEnterResponse(element) {
+    element.on('keypress', function (e) {
+        if (e.which == 13)
             enterResponse(this)
     })
 }
@@ -132,10 +126,8 @@ function setEnterResponse(element)
  * 
  * @param {*} input the input line to bind 
  */
-function enterResponse(input)
-{
-    if (!$(input).prop('readonly'))
-    {
+function enterResponse(input) {
+    if (!$(input).prop('readonly')) {
         $(input).prop('readonly', true);
         $(input).parent().append(getEditButton(input))
         if ($(input).hasClass("team-info")) {
@@ -146,17 +138,16 @@ function enterResponse(input)
         if ($(input).attr("id") == 'event-name-input')
             $("#teams").show();
         $(input).attr("data-click", 1)
-    }   
+    }
 }
 
 /**
  * Gets the html for a edit button and binds it to its function
  * @param {*} input - the input line this will be appended to
  */
-function getEditButton(input)
-{
-    var $button =  $(`<div class = "ml-3 btn btn-outline-info"><i class="fas fa-pen"></i></div>`)
-    $button.on( 'click', function () {
+function getEditButton(input) {
+    var $button = $(`<div class = "ml-3 btn btn-outline-info"><i class="fas fa-pen"></i></div>`)
+    $button.on('click', function () {
         $(input).prop('readonly', false);
         $(input).parent().children(".btn").remove();
     })
@@ -167,8 +158,7 @@ function getEditButton(input)
  * Gets the html for a delete button and binds it to its function
  * @param {*} input - the input line this will be appended to 
  */
-function getDeleteButton(input)
-{
+function getDeleteButton(input) {
     var $button = $(`<div class = "ml-3 btn btn-outline-danger"><i class="fas fa-times"></i></div>`)
     $button.on('click', function () {
         $(input).parent().remove();
@@ -179,8 +169,7 @@ function getDeleteButton(input)
 /**
  * Gets a team input line and binds it to an enter key function
  */
-function getTeamLine()
-{
+function getTeamLine() {
     var $team = $(`<div class="input-group mt-3 mb-3 ">
                     <input type="text" class="form-control team-info info" >
                 </div>`)
@@ -191,16 +180,14 @@ function getTeamLine()
 /**
  * Adds a match input line to the form
  */
-function addMatchLine()
-{
+function addMatchLine() {
     $('#match-info-group').append(getMatchLine());
 }
 
 /**
  * Gets the html for a match input line
  */
-function getMatchLine()
-{
+function getMatchLine() {
     var match = ` <div class="match-info input-group mt-3 mb-3">
                             <div class="input-group-prepend mr-3">
                                 <span class="input-group-text">Match ${++matchNum}</span>
@@ -216,47 +203,46 @@ function getMatchLine()
 /**
  * Gets all events and binds their options to a set up
  */
-async function setUpEventOptions()
-{
+async function setUpEventOptions() {
     getExistingEvents()
-    .then(events => {
-        for (event of events)
-            $('#edit-event-options').append("<option>" + event + "</option>");
-    })
+        .then(events => {
+            for (event of events)
+                $('#edit-event-options').append("<option>" + event + "</option>");
+        })
 
     /**
      * Fills in all known data for the selected event
      */
-    $('#edit-button').on("click", async function(){
+    $('#edit-button').on("click", async function () {
         enterResponse('#event-name-input');
         var eventName = $('#edit-event-options option:selected').text()
         $('#event-name-input').val(eventName);
-    
+
 
         getTeamsInEvent(eventName)
-        .then(teams => {
-            for (i in teams) {
-                enterResponse($('.team-info').eq(i));
-                $('.team-info').eq(i).val(teams[i]);
-            }
-        })
-       getMatchesInEvent(eventName)
-       .then((matches) => {
+            .then(teams => {
+                for (i in teams) {
+                    enterResponse($('.team-info').eq(i));
+                    $('.team-info').eq(i).val(teams[i]);
+                }
+            })
+        getMatchesInEvent(eventName)
+            .then((matches) => {
 
-           var simpleListOfMatchData = [];
-           for (match of matches) {
-               var teams = []
-               for (alliance in match) 
-                   teams = teams.concat(match[alliance]);
-               simpleListOfMatchData.push(teams);
-           }
-           for (i in simpleListOfMatchData) {
-               addMatchLine();
-               $('.match-info').eq(i).children(".form-control").each(function (j, childObj) {
-                   $(this).val(simpleListOfMatchData[i][j]);
-               })
-           }
-       })
+                var simpleListOfMatchData = [];
+                for (match of matches) {
+                    var teams = []
+                    for (alliance in match)
+                        teams = teams.concat(match[alliance]);
+                    simpleListOfMatchData.push(teams);
+                }
+                for (i in simpleListOfMatchData) {
+                    addMatchLine();
+                    $('.match-info').eq(i).children(".form-control").each(function (j, childObj) {
+                        $(this).val(simpleListOfMatchData[i][j]);
+                    })
+                }
+            })
         cardClick();
     })
 }

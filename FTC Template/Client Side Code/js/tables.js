@@ -18,11 +18,11 @@ document.addEventListener("DOMContentLoaded", event => {
     $("#highlight-btn").on("click", () => {
         var team = $("#highlight-team option:selected").text();
 
-        if ( isNaN( Number(team) ) ) // Do nothing if default option is selected
+        if (isNaN(Number(team))) // Do nothing if default option is selected
             return;
 
         $("#highlight-team option:selected").remove(); // Remove team from highlight options
-        
+
         // Store team and it's desired color to list 
         var style = [team, $("#highlight-color").val()];
         highlightedTeams.push(style)
@@ -75,11 +75,11 @@ document.addEventListener("DOMContentLoaded", event => {
         var paths = [];
 
         //Goes through and stores each task selected
-        $(".data").each(function(index, value) {
+        $(".data").each(function (index, value) {
             if ($(this).is(':checked'))
                 paths.push($(this).attr('id'));
         })
-        
+
         setUpTable(paths);
         $("#table-card").show();
     })
@@ -88,8 +88,7 @@ document.addEventListener("DOMContentLoaded", event => {
 /**
  * Sets up all the teams as options to be highlighted
  */
-function setUpHighlightOptions()
-{
+function setUpHighlightOptions() {
     getAllTeams()
         .then((teams) => {
             for (team of teams)
@@ -103,53 +102,48 @@ function setUpHighlightOptions()
  */
 function setUpTable(paths) {
     getAllTeamData()
-    .then(allTeamData => {
-        setUpTableHeaders(["#", "Team"].concat(paths));
-        var index = 1;
-        for(data of allTeamData)
-        {
-            var info = [data[0]];
-            for(path of paths)
-            {
-                path = path.split(" ");
-                var value = data[1];
-                for (i = 0; i < path.length; i++)
-                    value = value[path[i]];
-                info.push(Math.round(value * 1000)/1000);
+        .then(allTeamData => {
+            setUpTableHeaders(["#", "Team"].concat(paths));
+            var index = 1;
+            for (data of allTeamData) {
+                var info = [data[0]];
+                for (path of paths) {
+                    path = path.split(" ");
+                    var value = data[1];
+                    for (i = 0; i < path.length; i++)
+                        value = value[path[i]];
+                    info.push(Math.round(value * 1000) / 1000);
+                }
+                teamData.push(info);
+                setUpRow([index++].concat(info));
             }
-            teamData.push(info);
-            setUpRow([index++].concat(info));
-        }
-        $("#ranking-options").hide();
-    })
+            $("#ranking-options").hide();
+        })
 }
 
 /**
  * Gets each task and sets up an option for it
  */
-function getHeaderOptions() 
-{
+function getHeaderOptions() {
     getEmptyMatchData()
-    .then(sampleData => {
-        sampleData = sampleData.gamePlay;
-        var options = [];
-        for (gamePeriod in sampleData)
-            for (score in sampleData[gamePeriod])
-                options.push(gamePeriod + " " + score);
-        options.push("totalScore");
-        setUpHeaderOptions(options);
-    })
-   
+        .then(sampleData => {
+            sampleData = sampleData.gamePlay;
+            var options = [];
+            for (gamePeriod in sampleData)
+                for (score in sampleData[gamePeriod])
+                    options.push(gamePeriod + " " + score);
+            options.push("totalScore");
+            setUpHeaderOptions(options);
+        })
+
 }
 
 /**
  * Sets up a checkbox option for each possible task to view 
  * @param {*} options 
  */
-function setUpHeaderOptions(options)
-{
-    for(option of options)
-    {
+function setUpHeaderOptions(options) {
+    for (option of options) {
         $("#header-options").append(` <div class="col-2 my-2 form-check">
                             <input class="form-check-input data" type="checkbox" id="${option}">
                             <label class="form-check-label" for="${option}">
@@ -163,19 +157,17 @@ function setUpHeaderOptions(options)
  * Sets up the header for each column of the table
  * @param {*} headers - a list of the headers to use
  */
-function setUpTableHeaders(headers)
-{
+function setUpTableHeaders(headers) {
     var index = 0;
-    for(header of headers)
-        $("#table-headers").append(`<th data-sort = "${index ++}"scope="col">${header}</th>`)
+    for (header of headers)
+        $("#table-headers").append(`<th data-sort = "${index++}"scope="col">${header}</th>`)
 }
 
 /**
  * Sets up a row in the data table based off the inputted data
  * @param {*} info - the team's data for the row
  */
-function setUpRow(info)
-{
+function setUpRow(info) {
     var color = "";
     // If the team whose data is inputted is on the highlight list, highlight it
     for (style of highlightedTeams)
@@ -184,7 +176,7 @@ function setUpRow(info)
 
     // Add all values to row
     var row = `<tr style = "background-color: ${color}"><th scope = "row">${info[0]}</th>`
-    for(var i = 1; i < info.length; i++)
+    for (var i = 1; i < info.length; i++)
         row += `<td>${info[i]}</td>`
     row += `</tr>`
 
@@ -195,16 +187,15 @@ function setUpRow(info)
  * Resorts and displays chart based off what value the user wants to sort by
  * @param {*} index - the index on the page of the value the user wants to sort by
  */
-function reorganizeChart(index)
-{
-    if(index - 1 < 0)
+function reorganizeChart(index) {
+    if (index - 1 < 0)
         return;
     index -= 1; // The data in the lists is shifted by 1 from what the user sees
     $("#table-body").empty(); // Remove everything
     sort(index) // Sorts list
     var num = 1;
     // Make table based off new sorted data
-    for(info of teamData)
+    for (info of teamData)
         setUpRow([num++].concat(info));
 }
 
@@ -212,9 +203,8 @@ function reorganizeChart(index)
  * Sorts the team data lists based off the values at the given index
  * @param {*} sortIndex - the index of the value to sort off of 
  */
-function sort(sortIndex)
-{
-    teamData.sort(function(a, b){
+function sort(sortIndex) {
+    teamData.sort(function (a, b) {
         return b[sortIndex] - a[sortIndex];
     })
 }

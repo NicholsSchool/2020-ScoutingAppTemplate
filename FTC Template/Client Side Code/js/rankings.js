@@ -128,7 +128,26 @@ function setRankedTable() {
         path = "averages.totalScore";
     var numTeams = !$("#num-teams-check").is(':checked') ? $("#ranking-num-teams").val() : 0;
     var isReversed = $("#reversed-check").is(':checked');
-    getUpdatableRankings(path, numTeams, isReversed, choice) // Makes the table update in real time
+    //  getUpdatableRankings(path, numTeams, isReversed, choice) // Makes the table update in real time
+    makeRankedTable(path, numTeams, isReversed, choice);
+
+}
+
+/**
+ * Creates and displays a ranking card which does NOT update in real time
+ * (This is used because it is less reads than update table, so less likely for 
+ *  us to go over firebase limits)
+ * @param {String} path - the data storage path of the desired task
+ * @param {Number} numTeams - the number of teams to include in the list
+ * @param {Boolean} isReversed - true if the ranking should be reversed
+ * @param {String} choice - the task selected 
+ */
+function makeRankedTable(path, numTeams, isReversed, choice) {
+    getRankings(path, numTeams, isReversed)
+        .then(data => {
+            var table = makeTable(data, path);
+            $("#rankings").before(makeTableCard(choice, table));
+        })
 }
 
 /**
@@ -161,11 +180,11 @@ function makeTable(data, path) {
         table += `    <tr style = "background-color: ${color}">
                         <th scope="row">${i}</th>
                         <td>
-                            <a href = "https://frcscouting-65ef2.firebaseapp.com/teamInfo.html?team=${info[0]}" target="_blank">
+                            <a href = "${document.location.origin}/teamInfo.html?team=${info[0]}" target="_blank">
                             ${info[0]}
                             </a>
                         </td>
-                        <td>${info[1]}</td>
+                        <td>${Math.round(info[1] * 1000) / 1000}</td>
                         </tr>`
         i++;
     }

@@ -173,7 +173,14 @@ function filterEvent(response) {
  * @param {Function} send - the function which sends the filtered data to the server
  */
 function setBlueAllianceData(urlSuffix, filter, send) {
-    $.get('/getBlueAllianceKey')
+    firebase.auth().currentUser.getIdToken(true)
+        .then(idToken => (
+            $.ajax({
+                url: "/getBlueAllianceKey",
+                headers: { 'Authorization': idToken },
+                method: 'GET',
+            })
+        ))
         .then(key => {
             //Make query request
             $.ajax({

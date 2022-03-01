@@ -91,7 +91,6 @@ function saveData() {
         .then((scouttedData) => {
             firebase.auth().currentUser.getIdToken(true)
                 .then((idToken) => {
-                    console.log(id)
                     return $.ajax({
                         url: "/saveData",
                         headers: { 'Authorization': idToken },

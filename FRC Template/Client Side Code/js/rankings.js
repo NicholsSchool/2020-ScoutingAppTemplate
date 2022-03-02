@@ -159,12 +159,14 @@ async function getRankedData(path, numTeams, isReversed) {
             allAverageData = avgs;
             var rankedData = []
             var i = 0;
-            var gamePeriod = path.split(".")[1];
-            var task = path.split(".")[2];
+            var pathList = path.split(".");
             for (info of allAverageData) {
                 if (numTeams != 0 && i > numTeams)
                     break;
-                rankedData.push([info[0], info[1][gamePeriod][task]]);
+                var value = info[1];
+                for (j = 1; j < pathList.length; j++)
+                    value = value[pathList[j]];
+                rankedData.push([info[0], value]);
                 i++;
             }
             rankedData.sort((a, b) => {

@@ -39,7 +39,7 @@
 
 <body style="background-color: aliceblue">
     <div id="header"></div>
-    <div id = "content" class="container mt-3">
+    <div id="content" class="container mt-3">
         <div class="row">
             <div class="col-md-5">
                 <div class="card">
@@ -70,31 +70,37 @@
                 </div>
             </div>
         </div>
-        <div id = "ranking-options"class="row mt-3">
+        <div id="ranking-options" class="row mt-3">
             <div class="card w-100">
                 <div class="text-center card-header">
                     Select Rankings to View
                 </div>
-                <div class = "card-body">
-                    <div id = "header-options" class = "row justify-content-around ml-3">
+                <div class="card-body">
+                    <div class="row justify-content-around py-3">
+                        <div class="btn btn-success" id="select-all">Select All</div>
+                        <div class="btn btn-danger" id="unselect-all">Unselect All</div>
                     </div>
-                    <div class = "text-center border-top pt-3"><div id = "rankings-btn" class = "btn btn-outline-primary">Get Rankings</div></div>
+                    <div id="header-options" class="row justify-content-around ml-3">
+                    </div>
+                    <div class="text-center border-top pt-3">
+                        <div id="rankings-btn" class="btn btn-outline-primary">Get Rankings</div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row mt-3">
-            <div id = "table-card" class="card">
+            <div id="table-card" class="card">
                 <div class="card-header">
                     <h4 class="text-center">All Rankings</h4>
                 </div>
                 <div class=" text-center">
-                    <div style = "overflow-x:auto;">
+                    <div style="overflow-x:auto;">
                         <table class="table table-striped">
                             <thead>
-                                <tr id = "table-headers">
+                                <tr id="table-headers">
                                 </tr>
                             </thead>
-                            <tbody id = "table-body">
+                            <tbody id="table-body">
                             </tbody>
                         </table>
                     </div>
@@ -107,15 +113,15 @@
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="/__/firebase/7.8.2/firebase-app.js"></script>
-    
+
     <!-- TODO: Add SDKs for Firebase products that you want to use
-         https://firebase.google.com/docs/web/setup#available-libraries -->
+     https://firebase.google.com/docs/web/setup#available-libraries -->
     <script src="/__/firebase/7.14.5/firebase-auth.js"></script>
     <script src="/__/firebase/7.8.2/firebase-analytics.js"></script>
-    
+
     <!-- Initialize Firebase -->
     <script src="/__/firebase/init.js"></script>
-    
+
     <!-- Set Up Program Files-->
     <script src="js/userServer.js"></script>
     <script src="js/tables.js"></script>

@@ -1,84 +1,11 @@
 var methods = {};
 
 /**
- * Returns an empty match data storage object
- * 
- * @return an empty match data storage object
- */
-methods.getEmptyMatchData = function(){
-    /*
-      TODO: Insert each task for each gameperiod of the game here. 
- 
-             You can insert as many tasks as necessary. 
-             Try to keep tasks one word, if more than one word has to be 
-             used to describe a task, seperate each word with an underscore.
-             For example, for wanting to record if a team didn't show up, you would 
-             use "no_show"
- 
-             Set each task's value to 0. 
-             
-             DO NOT remove any of the "score" attributes or the "totalScore."
- 
-             Example:
-                 gamePlay: {
-                         auto: {
-                             "line" : 0, 
-                             "score": 0,
-                             ...
-                         },
-                         teleop: {
-                             "jumps": 0,
-                             "score": 0,
-                             ...
-                         },
-                         ...
-                     }
-             
-             Notes: 
-                     If another gameperiod is necessary to be added, that is fine
-                     but remember to add it to getDataPointValues() as well. Adding a 
-                     "score" attribute to the new gameperiod is not needed.
- 
-                     If after an event you decide to add more tasks or remove some,
-                     that should work compeletly fine for your next event, but may cause
-                     issues trying to view data from previous events. 
- 
-                     The tasks placed here must also be used for IDs in index.html. 
-                     More info is explained there
- 
-     */
-    return {
-        match: "",
-        team: "",
-        gamePlay: {
-            auto: {
-                // Insert tasks for Auto here.
-                "score": 0,
-            },
-            teleop: {
-                // Insert tasks for Teleop here.
-                "score": 0,
-            },
-            end: {
-                // Insert tasks for Endgame here.
-                "score": 0,
-            },
-            performance: {
-                // Insert tasks for Performace here.
-                // This is stuff like defense or no_show. Also set these to 0. 
-
-            },
-            totalScore: 0
-        }
-    }
-}
-
-/**
  * Returns an object containing the point values for each task being scouted
  * 
  * @return an object containing the point values for each task being scouted
  */
-methods.getDataPointValues = function() {
+methods.getDataPointValues = function () {
     /*
       TODO: Insert the point value for each task for each gameperiod of the game here.
 
@@ -126,12 +53,37 @@ methods.getDataPointValues = function() {
     }
 }
 
+
+/**
+ * Returns an empty match data storage object
+ * 
+ * @return an empty match data storage object
+ */
+methods.getEmptyMatchData = function () {
+    var gamePlay = methods.getDataPointValues();
+    for (var gamePeriod in gamePlay) {
+        for (var scoring in gamePlay[gamePeriod]) {
+            gamePlay[gamePeriod][scoring] = 0;
+        }
+        gamePlay[gamePeriod]["score"] = 0;
+    }
+    gamePlay["totalScore"] = 0
+
+    return {
+        match: "",
+        team: "",
+        gamePlay: gamePlay,
+        timestamps: []
+    }
+}
+
+
 /**
  * Returns an object containing each task which only one team can accomplish per match
  * 
  * @return an object containing each task which only one team can accomplish per match
  */
-methods.getDependentData = function() {
+methods.getDependentData = function () {
     /*
         TODO: Insert each dependent task and its corresponding gameperiod here. 
 

@@ -100,7 +100,7 @@ function saveData() {
                 })
                 .then(() => {
                     reset();
-                    $("#main").hide();
+                    hideContent()
                 })
         })
 }
